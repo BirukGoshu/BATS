@@ -1,0 +1,11 @@
+# Ignore the .git directory
+.git/
+
+# Ignore the .venv directory
+.venv/
+
+# Ignore the static directory
+static/
+
+# Ignore the SQLite database file
+db.sqlite3
