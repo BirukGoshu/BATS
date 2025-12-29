@@ -7,7 +7,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Users(AbstractUser):
     email = models.EmailField(unique=True)
     phone = PhoneNumberField(region='ET', blank=True)
-    ProfilePicture = models.ImageField(upload_to='uploads/profile',blank=True)
+    ProfilePicture = models.ImageField(upload_to='static/uploads/profile',blank=True)
     status = models.CharField(max_length=191, default='active')
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(blank=True, null=True)
@@ -27,13 +27,13 @@ class Company(Users):
         db_table='company'
 
 class Agent(Users):
-    license=models.FileField(upload_to='agent/',blank=True,null=True)
+    license=models.FileField(upload_to='static/agent/',blank=True,null=True)
 
     class Meta:
         db_table='agent'
 
 class Designer(Users):
-    portfolio=models.FileField(upload_to='designer/',blank=True,null=True)
+    portfolio=models.FileField(upload_to='static/designer/',blank=True,null=True)
 
     class Meta:
         db_table='Designer'

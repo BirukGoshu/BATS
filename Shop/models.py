@@ -95,7 +95,7 @@ class Order(models.Model):
 class Design(models.Model):
     name=models.CharField(max_length=50)
     description=models.TextField(null=True)
-    file=models.FileField(upload_to='design/')
+    file=models.FileField(upload_to='static/design/')
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     
