@@ -26,9 +26,9 @@ SECRET_KEY = 'django-insecure-%)-(a6kxt(j2p^i&_aue^^6-^vjs=lih%bdcq&elbk%e9x2%qv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['bats.elusbakery.com','127.0.0.1']
+ALLOWED_HOSTS = ['bats.elusbakery.com','127.0.0.1','www.bats.elusbakery.com']
 CSRF_ALLOW_ALL_ORIGINS = False
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000','http://127.0.0.1:8000','http://bats.elusbakery.com','https://bats.elusbakery.com']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000','http://127.0.0.1:8000','http://bats.elusbakery.com','https://bats.elusbakery.com','http://www.bats.elusbakery.com','https://www.bats.elusbakery.com']
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = [
@@ -57,7 +57,9 @@ CORS_ORIGIN_WHITELIST = [
     'http://bats.elusbakery.com',
     'https://bats.elusbakery.com',
     'https://elusbakery.com',
-    'http://elusbakery.com'
+    'http://elusbakery.com',
+    'http://www.bats.elusbakery.com',
+    'https://www.bats.elusbakery.com'
     # 'http://*',
 ]
 
