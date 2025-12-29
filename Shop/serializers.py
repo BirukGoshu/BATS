@@ -23,7 +23,7 @@ class ProductSerializer(serializers.ModelSerializer):
     cat=serializers.CharField(source='category.name',write_only=True)
     imgs=serializers.ListField(child=serializers.ImageField(),write_only=True)
     category=ProductCategorySerializer(read_only=True)
-    images=ProductImageSerializer(many=True,read_only=True)
+    images=ProductImageSerializer(many=True,read_only=True,source='productimages_set')
     
     class Meta:
         model=Product
