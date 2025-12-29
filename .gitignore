@@ -9,3 +9,9 @@ static/
 
 # Ignore the SQLite database file
 db.sqlite3
+
+Shop/__pycache__/
+
+UserManagment/__pycache__/
+
+bingo/__pycache__/
