@@ -53,9 +53,9 @@ class OrderSerializer(serializers.ModelSerializer):
         fields='__all__'
 
     def create(self,validated_data):
-        category=validated_data.pop('cat')
-        category=ProductCategory.objects.get(name=category)
-        validated_data['category']=category
+        # category=validated_data.pop('cat')
+        # category=ProductCategory.objects.get(name=category)
+        # validated_data['category']=category
         validated_data['user']=self.context['request'].user
         order=Order.objects.create(**validated_data)
         return order
