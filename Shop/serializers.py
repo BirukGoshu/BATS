@@ -52,8 +52,22 @@ class OrderSerializer(serializers.ModelSerializer):
         model=Order
         fields='__all__'
 
+    def create(self,validated_data):
+        category=validated_data.pop('cat')
+        category=ProductCategory.objects.get(name=category)
+        validated_data['category']=category
+        validated_data['user']=self.context['request'].user
+        order=Order.objects.create(**validated_data)
+        return order
+
 class PurchaseSerializer(serializers.ModelSerializer):
     
     class Meta:
         model=Purchase
         fields='__all__'
+
+    def create(self,validated_data):
+        validated_data['total_price']=validated_data['quantity']*validated_data['Product'].price
+        validated_data['user']=self.context['request'].user
+        purchase=Purchase.objects.create(**validated_data)
+        return purchase
