@@ -29,6 +29,16 @@ class ProductSerializer(serializers.ModelSerializer):
         model=Product
         fields='__all__'
 
+    def create(self,validated_data):
+        imgs=validated_data.pop('imgs',[])
+        category=validated_data.pop('cat')
+        category=ProductCategory.objects.get(name=category)
+        validated_data['category']=category
+        product=Product.objects.create(**validated_data)
+        for img in imgs:
+            ProductImages.objects.create(Product=product,images=img)
+        return product
+
 class DesignSerializer(serializers.ModelSerializer):
     
     class Meta:
