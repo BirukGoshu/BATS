@@ -47,18 +47,19 @@ class DesignSerializer(serializers.ModelSerializer):
         fields='__all__'
 
 class OrderSerializer(serializers.ModelSerializer):
+    user=serializers.HiddenField(default=serializers.CurrentUserDefault())
     
     class Meta:
         model=Order
         fields='__all__'
 
-    def create(self,validated_data):
-        # category=validated_data.pop('cat')
-        # category=ProductCategory.objects.get(name=category)
-        # validated_data['category']=category
-        validated_data['user']=self.context['request'].user
-        order=Order.objects.create(**validated_data)
-        return order
+    # def create(self,validated_data):
+    #     # category=validated_data.pop('cat')
+    #     # category=ProductCategory.objects.get(name=category)
+    #     # validated_data['category']=category
+    #     # validated_data['user']=self.context['request'].user
+    #     order=Order.objects.create(**validated_data)
+    #     return order
 
 class PurchaseSerializer(serializers.ModelSerializer):
     
