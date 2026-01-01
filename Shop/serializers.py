@@ -48,6 +48,7 @@ class DesignSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     user=serializers.HiddenField(default=serializers.CurrentUserDefault())
+    category=serializers.CharField(source='category.name',write_only=True)
     
     class Meta:
         model=Order
@@ -62,6 +63,7 @@ class OrderSerializer(serializers.ModelSerializer):
     #     return order
 
 class PurchaseSerializer(serializers.ModelSerializer):
+    product=serializers.CharField(source='Product.name',write_only=True)
     user=serializers.HiddenField(default=serializers.CurrentUserDefault())
     
     class Meta:
