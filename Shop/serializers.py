@@ -34,6 +34,7 @@ class ProductSerializer(serializers.ModelSerializer):
         category=validated_data.pop('cat')
         category=ProductCategory.objects.get(name=category)
         validated_data['category']=category
+        validated_data['owner']=self.context['request'].user
         product=Product.objects.create(**validated_data)
         for img in imgs:
             ProductImages.objects.create(Product=product,images=img)
