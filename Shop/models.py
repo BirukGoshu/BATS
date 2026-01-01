@@ -57,7 +57,7 @@ class Purchase(models.Model):
     Product=models.ForeignKey(Product,on_delete=models.SET_NULL,null=True)
     quantity=models.FloatField()
     size=models.CharField(max_length=50,choices=Size,blank=True,null=True)
-    total_price=models.FloatField()
+    total_price=models.FloatField(blank=True,null=True)
     checkoutdata=models.JSONField(blank=True,null=True)
     paymentdata=models.JSONField(blank=True,null=True)
     paid=models.BooleanField(default=False)

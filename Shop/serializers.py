@@ -24,7 +24,7 @@ class ProductSerializer(serializers.ModelSerializer):
     imgs=serializers.ListField(child=serializers.ImageField(),write_only=True)
     category=ProductCategorySerializer(read_only=True)
     images=ProductImageSerializer(many=True,read_only=True,source='productimages_set')
-    
+    owner=serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model=Product
         fields='__all__'
@@ -34,7 +34,7 @@ class ProductSerializer(serializers.ModelSerializer):
         category=validated_data.pop('cat')
         category=ProductCategory.objects.get(name=category)
         validated_data['category']=category
-        validated_data['owner']=self.context['request'].user
+        # validated_data['owner']=self.context['request'].user
         product=Product.objects.create(**validated_data)
         for img in imgs:
             ProductImages.objects.create(Product=product,images=img)
@@ -62,6 +62,7 @@ class OrderSerializer(serializers.ModelSerializer):
     #     return order
 
 class PurchaseSerializer(serializers.ModelSerializer):
+    user=serializers.HiddenField(default=serializers.CurrentUserDefault())
     
     class Meta:
         model=Purchase
@@ -69,6 +70,6 @@ class PurchaseSerializer(serializers.ModelSerializer):
 
     def create(self,validated_data):
         validated_data['total_price']=validated_data['quantity']*validated_data['Product'].price
-        validated_data['user']=self.context['request'].user
+        # validated_data['user']=self.context['request'].user
         purchase=Purchase.objects.create(**validated_data)
         return purchase
