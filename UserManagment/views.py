@@ -26,7 +26,31 @@ class UsersViewSet(viewsets.ModelViewSet):
         token=Token.objects.filter(user=user)
         print(f'token={token}')
         token.delete()
+        auth.logout(request)
         return response.Response('logout succesful')
+    
+    @action(detail=False,methods=['PUT'])
+    def update_password(self,request):
+        user=request.user
+        password=request.data['password']
+        user.set_password(password)
+        user.save()
+        return response.Response('password updated successfully')
+    
+    @action(detail=False,methods=['PUT'])
+    def edit_profile(self,request):
+        user=request.user
+        email=request.data['email']
+        if Users.objects.filter(email=email).exists():
+            return response.Response('email already exists',status=422)
+        phone=request.data['phone']
+        profile_picture=request.data['profile_picture']
+        user.email=email
+        user.username=email
+        user.phone=phone
+        user.profile_picture=profile_picture
+        user.save()
+        return response.Response('profile updated successfully')
 
 class CompanyViewSet(viewsets.ModelViewSet):
     queryset=Company.objects.all()
