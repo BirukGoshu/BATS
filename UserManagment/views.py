@@ -106,6 +106,7 @@ class LoginViewSet(GenericViewSet,ListModelMixin):
                     u = ser.serialize("json",Users.objects.filter(email=email))
                     use = json.loads(u)[0]
                     resp = {}
+                    use['ProfilePicture']=user.ProfilePicture.url
                     resp.update(use['fields'])
                     return response.Response({'token': token, 'user': resp})
                     # return response.Response('{} successfully logged in your token is {}'.format(user.email,token))
