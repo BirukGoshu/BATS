@@ -20,7 +20,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
         
 class ProductSerializer(serializers.ModelSerializer):
     # status=serializers.CharField(read_only=True)
-    cat=serializers.CharField(source='category.name',write_only=True)
+    cat=serializers.PrimaryKeyRelatedField(queryset=ProductCategory.objects.all())
     imgs=serializers.ListField(child=serializers.ImageField(),write_only=True)
     category=ProductCategorySerializer(read_only=True)
     images=ProductImageSerializer(many=True,read_only=True,source='productimages_set')
