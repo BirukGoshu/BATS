@@ -46,7 +46,7 @@ class UsersViewSet(viewsets.ModelViewSet):
     def edit_profile(self,request):
         user=request.user
         email=request.data['email']
-        if Users.objects.filter(email=email).exists():
+        if email != user.email and Users.objects.filter(email=email).exists():
             return response.Response('email already exists',status=422)
         phone=request.data['phone']
         profile_picture=request.data['profile_picture']
