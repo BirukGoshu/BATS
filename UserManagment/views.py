@@ -46,8 +46,10 @@ class UsersViewSet(viewsets.ModelViewSet):
     def get_profile(self,request):
         user=request.user
         serializer=UserSerializer(user)
-        serializer.data['ProfilePicture']='https://bats.elusbakery.com'+serializer.data['ProfilePicture']
-        return response.Response(serializer.data)
+        data = dict(serializer.data)
+        if data.get('ProfilePicture'):
+            data['ProfilePicture'] = 'https://bats.elusbakery.com' + data['ProfilePicture']
+        return response.Response(data)
     
     @action(detail=True,methods=['PUT'])
     def edit_profile(self,request):
@@ -107,8 +109,9 @@ class LoginViewSet(GenericViewSet,ListModelMixin):
                     u = ser.serialize("json",Users.objects.filter(email=email))
                     use = json.loads(u)[0]
                     resp = {}
-                    # use['ProfilePicture']='https://bats.elusbakery.com'+use['ProfilePicture']
                     resp.update(use['fields'])
+                    if resp.get('ProfilePicture'):
+                        resp['ProfilePicture'] = 'https://bats.elusbakery.com' + resp['ProfilePicture']
                     return response.Response({'token': token, 'user': resp})
                     # return response.Response('{} successfully logged in your token is {}'.format(user.email,token))
                 else:
