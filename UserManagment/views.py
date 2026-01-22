@@ -42,7 +42,13 @@ class UsersViewSet(viewsets.ModelViewSet):
         user.save()
         return response.Response('password updated successfully')
     
-    @action(detail=False,methods=['PUT'])
+    @action(detail=False,methods=['GET'])
+    def get_profile(self,request):
+        user=request.user
+        serializer=UserSerializer(user)
+        return response.Response(serializer.data)
+    
+    @action(detail=True,methods=['PUT'])
     def edit_profile(self,request):
         user=request.user
         if 'email' in request.data:
