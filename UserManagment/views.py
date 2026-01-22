@@ -56,7 +56,7 @@ class UsersViewSet(viewsets.ModelViewSet):
             user.phone=phone
         if 'profile_picture' in request.data:
             profile_picture=request.data['profile_picture']
-            user.profile_picture=profile_picture
+            user.ProfilePicture=profile_picture
         if 'first_name' in request.data:
             first_name=request.data['first_name']
             user.first_name=first_name
