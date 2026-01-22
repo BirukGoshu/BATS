@@ -45,15 +45,18 @@ class UsersViewSet(viewsets.ModelViewSet):
     @action(detail=False,methods=['PUT'])
     def edit_profile(self,request):
         user=request.user
-        email=request.data['email']
-        if email != user.email and Users.objects.filter(email=email).exists():
-            return response.Response('email already exists',status=422)
-        phone=request.data['phone']
-        profile_picture=request.data['profile_picture']
-        user.email=email
-        user.username=email
-        user.phone=phone
-        user.profile_picture=profile_picture
+        if 'email' in request.data:
+            email=request.data['email']
+            if email != user.email and Users.objects.filter(email=email).exists():
+                return response.Response('email already exists',status=422)
+            user.email=email
+            user.username=email
+        if 'phone' in request.data:
+            phone=request.data['phone']
+            user.phone=phone
+        if 'profile_picture' in request.data:
+            profile_picture=request.data['profile_picture']
+            user.profile_picture=profile_picture
         user.save()
         return response.Response('profile updated successfully')
 
