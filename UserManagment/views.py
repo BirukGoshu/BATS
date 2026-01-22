@@ -46,6 +46,7 @@ class UsersViewSet(viewsets.ModelViewSet):
     def get_profile(self,request):
         user=request.user
         serializer=UserSerializer(user)
+        serializer.data['ProfilePicture']=user.ProfilePicture.url
         return response.Response(serializer.data)
     
     @action(detail=True,methods=['PUT'])
