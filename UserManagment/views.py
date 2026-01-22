@@ -46,7 +46,7 @@ class UsersViewSet(viewsets.ModelViewSet):
     def get_profile(self,request):
         user=request.user
         serializer=UserSerializer(user)
-        serializer.data['ProfilePicture']='http://bats.elusbakery.com'+serializer.data['ProfilePicture']
+        serializer.data['ProfilePicture']='https://bats.elusbakery.com'+serializer.data['ProfilePicture']
         return response.Response(serializer.data)
     
     @action(detail=True,methods=['PUT'])
@@ -107,7 +107,7 @@ class LoginViewSet(GenericViewSet,ListModelMixin):
                     u = ser.serialize("json",Users.objects.filter(email=email))
                     use = json.loads(u)[0]
                     resp = {}
-                    use['ProfilePicture']='http://bats.elusbakery.com'+use['ProfilePicture']
+                    use['ProfilePicture']='https://bats.elusbakery.com'+use['ProfilePicture']
                     resp.update(use['fields'])
                     return response.Response({'token': token, 'user': resp})
                     # return response.Response('{} successfully logged in your token is {}'.format(user.email,token))
