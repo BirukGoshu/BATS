@@ -57,6 +57,12 @@ class UsersViewSet(viewsets.ModelViewSet):
         if 'profile_picture' in request.data:
             profile_picture=request.data['profile_picture']
             user.profile_picture=profile_picture
+        if 'first_name' in request.data:
+            first_name=request.data['first_name']
+            user.first_name=first_name
+        if 'last_name' in request.data:
+            last_name=request.data['last_name']
+            user.last_name=last_name
         user.save()
         return response.Response('profile updated successfully')
 
