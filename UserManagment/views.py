@@ -32,7 +32,12 @@ class UsersViewSet(viewsets.ModelViewSet):
     @action(detail=False,methods=['POST'])
     def update_password(self,request):
         user=request.user
-        password=request.data['password']
+        if request.data['old_password'] and request.data['new_password'] and request.data['confirm_password']:
+            if request.data['new_password'] != request.data['confirm_password']:
+                return response.Response('passwords don\'t match',status=422)
+            if not user.check_password(request.data['old_password']):
+                return response.Response('old password is incorrect',status=422)
+        password=request.data['new_password']
         user.set_password(password)
         user.save()
         return response.Response('password updated successfully')
