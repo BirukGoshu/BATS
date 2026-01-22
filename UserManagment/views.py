@@ -29,7 +29,7 @@ class UsersViewSet(viewsets.ModelViewSet):
         auth.logout(request)
         return response.Response('logout succesful')
     
-    @action(detail=False,methods=['PUT'])
+    @action(detail=False,methods=['POST'])
     def update_password(self,request):
         user=request.user
         password=request.data['password']
