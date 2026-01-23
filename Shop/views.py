@@ -37,6 +37,12 @@ class OrderViewSet(viewsets.ModelViewSet):
     serializer_class=OrderSerializer
     permission_classes=[permissions.IsAuthenticated]
 
+     def get_queryset(self):
+        if self.request.user.is_superuser:
+            return self.queryset
+        else:
+            return self.queryset.filter(user=self.request.user)
+
 class PurchaseViewSet(viewsets.ModelViewSet):  
     queryset=Purchase.objects.all()
     serializer_class=PurchaseSerializer
