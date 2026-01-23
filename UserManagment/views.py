@@ -51,7 +51,7 @@ class UsersViewSet(viewsets.ModelViewSet):
             data['ProfilePicture'] = 'https://bats.elusbakery.com' + data['ProfilePicture']
         return response.Response(data)
     
-    @action(detail=True,methods=['PUT'])
+    @action(detail=False,methods=['PUT'])
     def edit_profile(self,request):
         user=request.user
         if 'email' in request.data:
