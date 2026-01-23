@@ -75,7 +75,7 @@ class PurchaseSerializer(serializers.ModelSerializer):
         if product_id:
             product = Product.objects.get(id=product_id)
             validated_data['Product'] = product
-            validated_data['total_price'] = validated_data['quantity'] * product.price
+            validated_data['total_price'] = (validated_data['quantity'] * product.price) -  (validated_data['quantity'] * product.price * product.discount / 100)
         else:
             raise ValidationError('Product not found')
         # validated_data['user']=self.context['request'].user
