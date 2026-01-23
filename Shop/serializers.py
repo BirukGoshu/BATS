@@ -54,13 +54,13 @@ class OrderSerializer(serializers.ModelSerializer):
         model=Order
         fields='__all__'
 
-    # def create(self,validated_data):
-    #     # category=validated_data.pop('cat')
-    #     # category=ProductCategory.objects.get(name=category)
-    #     # validated_data['category']=category
-    #     # validated_data['user']=self.context['request'].user
-    #     order=Order.objects.create(**validated_data)
-    #     return order
+    def create(self,validated_data):
+        category=self.context['request'].data.get('category')
+        category=ProductCategory.objects.get(id=category)
+        validated_data['category']=category
+        # validated_data['user']=self.context['request'].user
+        order=Order.objects.create(**validated_data)
+        return order
 
 class PurchaseSerializer(serializers.ModelSerializer):
     Product=serializers.CharField(source='Product.name',read_only=True)
