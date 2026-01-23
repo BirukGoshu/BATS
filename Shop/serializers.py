@@ -71,7 +71,13 @@ class PurchaseSerializer(serializers.ModelSerializer):
         fields='__all__'
 
     def create(self,validated_data):
-        validated_data['total_price']=validated_data['quantity']*validated_data['Product'].price
+        product_id = self.context['request'].data.get('Product')
+        if product_id:
+            product = Product.objects.get(id=product_id)
+            validated_data['Product'] = product
+            validated_data['total_price'] = validated_data['quantity'] * product.price
+        else:
+            raise ValidationError('Product not found')
         # validated_data['user']=self.context['request'].user
         purchase=Purchase.objects.create(**validated_data)
         return purchase
